@@ -3,9 +3,9 @@ const db=require("./UTILS/dbconnect");
 const { User } = require("./Models/UserModel");
 const app =express();
 app.use(express.json());
-require('dotenv').config({path:__dirname+"/.env"}); 
+require('dotenv').config(); 
 app.get('/',function(req,res){
-    res.send("hello user welcome")
+    res.send("hello user welcome to initial page ")
 })
 app.get('/signup',async function(req,res){
    try {
@@ -14,6 +14,8 @@ app.get('/signup',async function(req,res){
             if(searchdata){
                 throw new Error("Email already exists please try another email")
             }
+            password=await User.hashpassword();
+            console.log(password)
        const data=await User.create({
             username:username,
             password:password,

@@ -21,7 +21,11 @@ const userSchema=new mongoose.Schema({
         required:true,
     }
 })
+userSchema.methods.hashpassword=async function(){
+           this.password = await bcrypt.hash(this.password, 20);
+}
 const User=mongoose.model('Users',userSchema);
 module.exports={
     User,
+   
 }
